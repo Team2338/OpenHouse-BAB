@@ -5,26 +5,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Globals;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Solenoids;
 
 /** An example command that uses an example subsystem. */
-public class RunPnuematicSingle extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+public class SingleSolenoid extends CommandBase {
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   */
-  public RunPnuematicSingle() {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+  public SingleSolenoid() {
+    addRequirements(Solenoids.getInstance());
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    if(Globals.lm3) {
+      Solenoids.getInstance().singleDoSomething(true);
+      return;
+    }
+
+    Solenoids.getInstance().singleDoSomething(false);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

@@ -8,28 +8,27 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.NEO;
 /** An example command that uses an example subsystem. */
 public class RunNEO extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final NEO m_subsystem;
 
+  private boolean isP;
   /**
    * Creates a new ExampleCommand.
    *
    */
-  public RunNEO() {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+  public RunNEO(boolean isP) {
+    addRequirements(NEO.getInstance());
+
+    this.isP = isP;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    NEO.getInstance().setSpeed((isP) ? 0.3 : 0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

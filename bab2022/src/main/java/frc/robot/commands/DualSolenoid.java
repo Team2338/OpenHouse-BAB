@@ -4,27 +4,35 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Globals;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Solenoids;
 
 /** An example command that uses an example subsystem. */
-public class RunPnuematicDouble extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+public class DualSolenoid extends CommandBase {
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   */
-  public RunPnuematicDouble() {
-    m_subsystem = subsystem;
+  private static int ctr = 0;
+  public DualSolenoid() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(Solenoids.getInstance());
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    switch (ctr % 3) {
+      case 0:
+        Solenoids.getInstance().doubleDoSomething(DoubleSolenoid.Value.kForward);
+      case 1:
+        Solenoids.getInstance().doubleDoSomething(DoubleSolenoid.Value.kOff);
+      case 2:
+        Solenoids.getInstance().doubleDoSomething(DoubleSolenoid.Value.kReverse);
+    }
+
+    ctr += (Globals.lm2) ? 1 : 0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

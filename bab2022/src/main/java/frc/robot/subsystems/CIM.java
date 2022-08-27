@@ -21,13 +21,16 @@ public class CIM extends SubsystemBase {
     return instance;
   }
 
-  private static final TalonSRX CIMShooterMotor   = new TalonSRX(RobotMap.MOTOR_TALON_ONE);
+  private static final TalonSRX CIMShooterMotor = new TalonSRX(RobotMap.MOTOR_TALON_ONE);
 
-  public CIM() {
-    CIMShooterMotor.setNeutralMode( NeutralMode.Brake);
+  private CIM() {
+    CIMShooterMotor.setNeutralMode(NeutralMode.Brake);
   }
 
-  // sets speed from -1 to 1
+  /**
+   * Set Speed Of the Motor
+   * @param speed % Speed Output
+   */
   public void setSpeed(double speed) {
     CIMShooterMotor.set(ControlMode.PercentOutput, speed);
   }

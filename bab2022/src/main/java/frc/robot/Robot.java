@@ -5,12 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DualSolenoid;
 import frc.robot.commands.RunCIM;
 import frc.robot.commands.RunNEO;
-import frc.robot.commands.RunPnuematicDouble;
-import frc.robot.commands.RunPnuematicSingle;
+import frc.robot.subsystems.LimitSwitch;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +20,10 @@ import frc.robot.commands.RunPnuematicSingle;
 public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
+  public LimitSwitch l1;
+  public LimitSwitch l2;
+  public LimitSwitch l3;
+  public LimitSwitch l4;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -31,6 +34,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    l1 = new LimitSwitch(RobotMap.LS_1, 0);
+    l2 = new LimitSwitch(RobotMap.LS_2, 1);
+    l3 = new LimitSwitch(RobotMap.LS_3, 2);
+    l4 = new LimitSwitch(RobotMap.LS_4, 3);
   }
 
   /**
@@ -46,6 +53,11 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    l1.updateGlobal();
+    l2.updateGlobal();
+    l3.updateGlobal();
+    l4.updateGlobal();
+    CommandScheduler.getInstance().schedule(new RunNEO(Globals.lm0), new RunCIM(Globals.lm1), new DualSolenoid());
     CommandScheduler.getInstance().run();
   }
 
@@ -77,10 +89,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    new RunCIM();
-    new RunNEO();
-    new RunPnuematicDouble();
-    new RunPnuematicSingle();
   }
 
   @Override

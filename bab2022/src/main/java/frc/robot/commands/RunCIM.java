@@ -12,17 +12,20 @@ import frc.robot.Robot;
 public class RunCIM extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
+  private boolean isP;
+  public RunCIM(boolean isP) {
+    addRequirements(CIM.getInstance());
+    this.isP = isP;
+  }
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    CIM.getInstance().setSpeed((isP) ? 0.3 : 0.0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    if() {
-      CIM.getInstance().setSpeed(200);
-    }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
